@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab0a5a7832f4f12bff1ca2c48627e97, type: 3}
+  m_Name: CropDataList_SO
+  m_EditorClassIdentifier: 
+  cropDetailsList:
+  - seedItemID: 1008
+    growthDays: 0100000002000000020000000300000002000000
+    prefabs:
+    - {fileID: 4676697242527822365, guid: f22183dc548447d458d83b216c69a117, type: 3}
+    - {fileID: 4676697242527822365, guid: f22183dc548447d458d83b216c69a117, type: 3}
+    - {fileID: 4676697242527822365, guid: f22183dc548447d458d83b216c69a117, type: 3}
+    - {fileID: 4676697242527822365, guid: f22183dc548447d458d83b216c69a117, type: 3}
+    - {fileID: 4676697242527822365, guid: f22183dc548447d458d83b216c69a117, type: 3}
+    sprites:
+    - {fileID: -1658124739, guid: 084c445d1b3d20942a1e8a445f3c6e5c, type: 3}
+    - {fileID: 13261169, guid: 084c445d1b3d20942a1e8a445f3c6e5c, type: 3}
+    - {fileID: -261386939, guid: 084c445d1b3d20942a1e8a445f3c6e5c, type: 3}
+    - {fileID: 1201604590, guid: 084c445d1b3d20942a1e8a445f3c6e5c, type: 3}
+    - {fileID: 1288418226, guid: 084c445d1b3d20942a1e8a445f3c6e5c, type: 3}
+    harvestToolItemID: 1000
+    requireActionCount: 1
+    transferItemID: 0
+    produceItemID: f1030000
+    produceMinAmount: 02000000
+    produceMaxAmount: 02000000
+    spawnRadius: {x: 0, y: 0}
+    daysToRegrow: 0
+    regrowthDays: 0
+    generateAtPlayerPosition: 1
+    hasAnimation: 0
