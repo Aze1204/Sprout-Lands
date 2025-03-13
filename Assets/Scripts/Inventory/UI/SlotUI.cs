@@ -114,10 +114,6 @@ namespace Sprout.Inventory
                 {
                     InventoryManager.Instance.SwapItem(slotIndex,targetIndex);
                 }
-                else
-                {
-                    
-                }
                 
                 inventoryUI.UpdateSlotHightLight(-1);
             }
