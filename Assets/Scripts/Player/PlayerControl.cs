@@ -1,9 +1,6 @@
 using System.Collections;
 using Sprout.Inventory;
 using UnityEngine;
-// 描述：用于管理角色移动。
-// 创建者：Aze
-// 创建时间：2024-12-29
 public class PlayerControl : MonoBehaviour
 {
     private Rigidbody2D rb;
@@ -83,7 +80,6 @@ public class PlayerControl : MonoBehaviour
     }
     private void OnMouseClickedEvent(Vector3 pos, ItemDetails details)
     {
-        //TODO: 播放角色动画
         if (details.itemType!=ItemType.Seed && 
             details.itemType!=ItemType.Commodity && 
             details.itemType!=ItemType.Furniture)
@@ -113,7 +109,6 @@ public class PlayerControl : MonoBehaviour
         isUseTool = true;
         inputDisable = true;
         yield return null;
-        //人物的转动方向
         animator.SetTrigger("UseTool");
         animator.SetFloat("InputX", mouseX);
         animator.SetFloat("InputY", mouseY);
@@ -134,8 +129,7 @@ public class PlayerControl : MonoBehaviour
             inputX *= 0.6f;
             inputY *= 0.6f;
         }
-
-        //走路速度
+        
         if (Input.GetKey(KeyCode.LeftShift))
         {
             inputX = inputX * 0.5f;

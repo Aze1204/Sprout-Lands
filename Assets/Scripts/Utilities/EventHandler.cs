@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-// 描述：事件中心，用于统一管理事件，采用观察者模式对方法进行统一调用。
-// 创建者：Aze
-// 创建时间：2024-12-29
 public static class EventHandler
 {
     public static event Action<InventoryLocation, List<InventoryItem>> UpdateInventoryUI;

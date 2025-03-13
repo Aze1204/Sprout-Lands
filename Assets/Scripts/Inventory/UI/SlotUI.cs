@@ -2,20 +2,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-// ���������Ƶ�Ԫ����ز�����
-// �����ߣ�Aze
-// ����ʱ�䣺2025-01-08
 
 namespace Sprout.Inventory
 {
-    public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler     //�������ʼ��ק����ק�У�������ק
+    public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [Header("�����ȡ")]
         [SerializeField] private Image slotImage;
         [SerializeField] private TextMeshProUGUI amountText;
         public GameObject slotHighLight;
         [SerializeField] private Button button;
-        [Header("��������")]
         public SlotType slotType;
         public bool isSelected;
         public int slotIndex;
@@ -33,12 +28,7 @@ namespace Sprout.Inventory
                 UpdateEmptySlot();
             }
         }
-
-        /// <summary>
-        /// ���¸���UI����Ϣ
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="amount"></param>
+        
         public void UpdateSlot(ItemDetails item, int amount)
         {
             itemDetails = item;
@@ -48,10 +38,7 @@ namespace Sprout.Inventory
             slotImage.enabled = true;
             button.interactable = true;
         }
-
-        /// <summary>
-        /// ����SlotΪ��
-        /// </summary>
+        
         public void UpdateEmptySlot()
         {
             if (isSelected)
@@ -79,12 +66,10 @@ namespace Sprout.Inventory
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            //��ʼ��ק����ͼ��
             if (itemAmount !=0)
             {
                 inventoryUI.dragItem.enabled = true;
                 inventoryUI.dragItem.sprite = slotImage.sprite;
-                //inventoryUI.dragItem.SetNativeSize();
                 isSelected = true;
                 inventoryUI.UpdateSlotHightLight(slotIndex);
                 EventHandler.CallCursorChangeEvent(CursorStates.Drag, itemDetails, isSelected);
@@ -121,7 +106,6 @@ namespace Sprout.Inventory
             {
                 if (itemDetails.canDropped)
                 {
-                    //����Ӧ�����ͼ����
                     var pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
                     EventHandler.CallInstantiateItemInScene(itemDetails.id, pos);
                     int currentItemID = InventoryManager.Instance.GetItemIndexInBag(itemDetails.id);
