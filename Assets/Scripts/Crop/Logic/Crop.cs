@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Event;
 using UnityEngine;
 
 public class Crop : MonoBehaviour
@@ -50,7 +51,7 @@ public class Crop : MonoBehaviour
             {
                 if (cropDetails.generateAtPlayerPosition)
                 {
-                    EventHandler.CallHarvestAtPlayerPosition(cropDetails.produceItemID[i]);
+                    InventoryEvent.CallHarvestAtPlayerPosition(cropDetails.produceItemID[i]);
                 }
             }
         }

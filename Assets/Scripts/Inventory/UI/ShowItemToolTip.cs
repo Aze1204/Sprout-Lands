@@ -1,8 +1,9 @@
+using Event;
 using UnityEngine;
 using UnityEngine.EventSystems;
-// ÃèÊö£ºÕ¹Ê¾ÎïÆ·ÃèÊöÃæ°å¡£
-// ´´½¨Õß£ºAze
-// ´´½¨Ê±¼ä£º2025-01-11
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¡£
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Aze
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2025-01-11
 namespace Sprout.Inventory
 {
     [RequireComponent(typeof(SlotUI))]
@@ -25,7 +26,7 @@ namespace Sprout.Inventory
 
                 InventoryUI.itemToolTip.GetComponent<RectTransform>().pivot = new Vector2(0.5f,0);
                 InventoryUI.itemToolTip.transform.position = transform.position + Vector3.up * 80;
-                EventHandler.CallCursorChangeEventWithSelection(CursorStates.Click,slotUI.itemDetails);
+                CursorEvent.CallCursorChangeEventWithSelection(CursorStates.Click,slotUI.itemDetails);
 
                 if (slotUI.itemDetails.itemType == ItemType.Furniture)
                 {
@@ -46,7 +47,7 @@ namespace Sprout.Inventory
         public void OnPointerExit(PointerEventData eventData)
         {
             InventoryUI.itemToolTip.gameObject.SetActive(false);
-            EventHandler.CallCursorChangeEventWithSelection(CursorStates.Normal,slotUI.itemDetails);
+            CursorEvent.CallCursorChangeEventWithSelection(CursorStates.Normal,slotUI.itemDetails);
         }
     }
 }

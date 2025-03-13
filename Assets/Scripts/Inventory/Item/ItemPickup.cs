@@ -1,8 +1,9 @@
+using Inventory.Logic;
 using Sprout.Inventory;
 using UnityEngine;
-// ÃèÊö£ºÎïÆ·Ê°È¡¹¦ÄÜ¡£
-// ´´½¨Õß£ºAze
-// ´´½¨Ê±¼ä£º2025-01-02
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·Ê°È¡ï¿½ï¿½ï¿½Ü¡ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Aze
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2025-01-02
 public class ItemPickup : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
@@ -12,7 +13,7 @@ public class ItemPickup : MonoBehaviour
         {
             if (item.itemDetails.canPickedup)
             {
-                //Ê°È¡ÎïÆ·
+                //Ê°È¡ï¿½ï¿½Æ·
                 InventoryManager.Instance.AddItem(item,true);
             }
         }

@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Event;
+using Inventory.Logic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
-// 描述：管理场景上的物品。
-// 创建者：Aze
-// 创建时间：2025-01-02
 namespace Sprout.Inventory 
 {
     public class ItemManager : MonoBehaviour
@@ -16,7 +15,7 @@ namespace Sprout.Inventory
         private Transform itemParent;
         private Tilemap tilemap;
 
-        //记录场景Item
+        //锟斤拷录锟斤拷锟斤拷Item
         private Dictionary<string,List<SceneItem>> sceneItemDict = new Dictionary<string,List<SceneItem>>();
         private Dictionary<string,List<SceneFurniture>> sceneFurnitureDict = new Dictionary<string,List<SceneFurniture>>();
 
@@ -27,23 +26,22 @@ namespace Sprout.Inventory
 
         private void OnEnable()
         {
-            EventHandler.InstantiateItemInScene += OnInstantiateItemInScene;
-            EventHandler.DropItemEvent += OnDropItemEvent;
-            EventHandler.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
-            EventHandler.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
+            InventoryEvent.InstantiateItemInScene += OnInstantiateItemInScene;
+            InventoryEvent.DropItemEvent += OnDropItemEvent;
+            SceneEvent.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
+            SceneEvent.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
             
-            //建造
-            EventHandler.BuildFurnitureEvent += OnBuildFurnitureEvent;
+            InventoryEvent.BuildFurnitureEvent += OnBuildFurnitureEvent;
         }
 
         private void OnDisable()
         {
-            EventHandler.InstantiateItemInScene -= OnInstantiateItemInScene;
-            EventHandler.DropItemEvent -= OnDropItemEvent;
-            EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
-            EventHandler.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
+            InventoryEvent.InstantiateItemInScene -= OnInstantiateItemInScene;
+            InventoryEvent.DropItemEvent -= OnDropItemEvent;
+            SceneEvent.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
+            SceneEvent.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
             
-            EventHandler.BuildFurnitureEvent -= OnBuildFurnitureEvent;
+            InventoryEvent.BuildFurnitureEvent -= OnBuildFurnitureEvent;
         }
         
         private void OnBuildFurnitureEvent(int id,Vector3 pos)
@@ -64,14 +62,12 @@ namespace Sprout.Inventory
             {
                 return;
             }
-            // 获取Tilemap的格子尺寸
             Vector3 cellSize = tilemap.cellSize;
 
             float randomX = Random.Range(-cellSize.x / 2f, cellSize.x / 2f);
             float randomY = Random.Range(-cellSize.y / 2f, cellSize.y / 2f);
             Vector3 randomOffset = new Vector3(randomX, randomY, 0);
-
-            // 在格子内随机位置生成物品
+            
             Vector3 randomPosition = pos + randomOffset;
             var item = Instantiate(itemPrefab,randomPosition,Quaternion.identity,itemParent);
             item.itemID = id;
@@ -89,10 +85,7 @@ namespace Sprout.Inventory
             RecreateAllItems();
             RebuildFurniture();
         }
-
-        /// <summary>
-        /// 获得当前场景所有Item
-        /// </summary>
+        
         private void GetAllSceneItems()
         {
             List<SceneItem> currentSceneItems = new List<SceneItem>();
@@ -106,19 +99,9 @@ namespace Sprout.Inventory
                 };
                 currentSceneItems.Add(sceneItem);
             }
-            if (sceneItemDict.ContainsKey(SceneManager.GetActiveScene().name))
-            {
-                sceneItemDict[SceneManager.GetActiveScene().name] = currentSceneItems;
-            }
-            else
-            {
-                sceneItemDict.Add(SceneManager.GetActiveScene().name,currentSceneItems);
-            }
+            sceneItemDict[SceneManager.GetActiveScene().name] = currentSceneItems;
         }
-
-        /// <summary>
-        /// 刷新重建所有Item
-        /// </summary>
+        
         private void RecreateAllItems()
         {
             List<SceneItem> currentSceneItems = new List<SceneItem>();
@@ -126,7 +109,7 @@ namespace Sprout.Inventory
             {
                 if (currentSceneItems != null)
                 {
-                    //清场
+                    //锟藉场
                     foreach (var item in FindObjectsOfType<Item>())
                     {
                         Destroy(item.gameObject);
@@ -141,9 +124,6 @@ namespace Sprout.Inventory
             }
         }
         
-        /// <summary>
-        /// 获得场景所有家具
-        /// </summary>
         private void GetAllSceneFurniture()
         {
             List<SceneFurniture> currentSceneFurniture = new List<SceneFurniture>();
@@ -159,23 +139,17 @@ namespace Sprout.Inventory
             }
             if (sceneFurnitureDict.ContainsKey(SceneManager.GetActiveScene().name))
             {
-                //找到数据就更新item数据列表
                 sceneFurnitureDict[SceneManager.GetActiveScene().name] = currentSceneFurniture;
             }
-            else    //如果是新场景
+            else    
             {
                 sceneFurnitureDict.Add(SceneManager.GetActiveScene().name, currentSceneFurniture);
             }
         }
         
-        /// <summary>
-        /// 重建当前场景家具
-        /// </summary>
         private void RebuildFurniture()
         {
-            List<SceneFurniture> currentSceneFurniture = new List<SceneFurniture>();
-
-            if (sceneFurnitureDict.TryGetValue(SceneManager.GetActiveScene().name, out currentSceneFurniture))
+            if (sceneFurnitureDict.TryGetValue(SceneManager.GetActiveScene().name, out var currentSceneFurniture))
             {
                 if (currentSceneFurniture != null)
                 {

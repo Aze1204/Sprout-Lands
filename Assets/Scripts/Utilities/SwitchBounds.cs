@@ -1,20 +1,19 @@
 using Cinemachine;
+using Event;
 using UnityEngine;
-// 描述：设置摄像机边界。
-// 创建者：Aze
-// 创建时间：2025-01-14
+
 public class SwitchBounds : MonoBehaviour
 {
     private void OnEnable()
     {
-        EventHandler.BeforeSceneUnloadEvent += SwitchConfinerShape;
-        EventHandler.AfterSceneUnloadEvent += SwitchConfinerShape;
+        SceneEvent.BeforeSceneUnloadEvent += SwitchConfinerShape;
+        SceneEvent.AfterSceneUnloadEvent += SwitchConfinerShape;
     }
 
     private void OnDisable()
     {
-        EventHandler.BeforeSceneUnloadEvent -= SwitchConfinerShape;
-        EventHandler.AfterSceneUnloadEvent -= SwitchConfinerShape;
+        SceneEvent.BeforeSceneUnloadEvent -= SwitchConfinerShape;
+        SceneEvent.AfterSceneUnloadEvent -= SwitchConfinerShape;
     }
 
     private void SwitchConfinerShape()
@@ -24,8 +23,7 @@ public class SwitchBounds : MonoBehaviour
         CinemachineConfiner confiner = GetComponent<CinemachineConfiner>();
 
         confiner.m_BoundingShape2D = confinerShape;
-
-        //清除缓存
+        
         confiner.InvalidatePathCache();
     }
 }

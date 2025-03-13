@@ -1,3 +1,5 @@
+using Event;
+using Inventory.Logic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +20,7 @@ namespace Sprout.Inventory
         public ItemDetails itemDetails;
         public int itemAmount;
 
-        public InventoryUI inventoryUI => GetComponentInParent<InventoryUI>();
+        public InventoryUI InventoryUI => GetComponentInParent<InventoryUI>();
 
         private void Start()
         {
@@ -44,7 +46,7 @@ namespace Sprout.Inventory
             if (isSelected)
             {
                 isSelected = false;
-                inventoryUI.UpdateSlotHightLight(-1);
+                InventoryUI.UpdateSlotHightLight(-1);
             }
             itemDetails = null;
             slotImage.enabled = false;
@@ -60,31 +62,31 @@ namespace Sprout.Inventory
                 return;
             }
             isSelected = !isSelected;
-            inventoryUI.UpdateSlotHightLight(slotIndex);
-            EventHandler.CallCursorChangeEvent(CursorStates.Click,itemDetails, isSelected);
+            InventoryUI.UpdateSlotHightLight(slotIndex);
+            CursorEvent.CallCursorChangeEvent(CursorStates.Click,itemDetails, isSelected);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (itemAmount !=0)
             {
-                inventoryUI.dragItem.enabled = true;
-                inventoryUI.dragItem.sprite = slotImage.sprite;
+                InventoryUI.dragItem.enabled = true;
+                InventoryUI.dragItem.sprite = slotImage.sprite;
                 isSelected = true;
-                inventoryUI.UpdateSlotHightLight(slotIndex);
-                EventHandler.CallCursorChangeEvent(CursorStates.Drag, itemDetails, isSelected);
+                InventoryUI.UpdateSlotHightLight(slotIndex);
+                CursorEvent.CallCursorChangeEvent(CursorStates.Drag, itemDetails, isSelected);
             }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            inventoryUI.dragItem.transform.position = Input.mousePosition;
-            EventHandler.CallCursorChangeEvent(CursorStates.Drag, itemDetails, isSelected);
+            InventoryUI.dragItem.transform.position = Input.mousePosition;
+            CursorEvent.CallCursorChangeEvent(CursorStates.Drag, itemDetails, isSelected);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            inventoryUI.dragItem.enabled = false;
+            InventoryUI.dragItem.enabled = false;
 
             if (eventData.pointerCurrentRaycast.gameObject!=null)
             {
@@ -100,24 +102,24 @@ namespace Sprout.Inventory
                     InventoryManager.Instance.SwapItem(slotIndex,targetIndex);
                 }
                 
-                inventoryUI.UpdateSlotHightLight(-1);
+                InventoryUI.UpdateSlotHightLight(-1);
             }
             else
             {
                 if (itemDetails.canDropped)
                 {
                     var pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-                    EventHandler.CallInstantiateItemInScene(itemDetails.id, pos);
+                    InventoryEvent.CallInstantiateItemInScene(itemDetails.id, pos);
                     int currentItemID = InventoryManager.Instance.GetItemIndexInBag(itemDetails.id);
                     InventoryItem newItem = InventoryManager.Instance.playerBag.itemList[currentItemID];
                     newItem.itemID = itemDetails.id;
                     Debug.Log(newItem.itemID);
                     newItem.itemAmount -= 1;
                     InventoryManager.Instance.playerBag.itemList[currentItemID] = newItem;
-                    EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, InventoryManager.Instance.playerBag.itemList);
+                    InventoryEvent.CallUpdateInventoryUI(InventoryLocation.Player, InventoryManager.Instance.playerBag.itemList);
                 }
             }
-            EventHandler.CallCursorChangeEvent(CursorStates.Normal, itemDetails, false);
+            CursorEvent.CallCursorChangeEvent(CursorStates.Normal, itemDetails, false);
         }
     }
 }

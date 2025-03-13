@@ -1,10 +1,8 @@
+using Inventory.Logic;
 using Sprout.Inventory;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-// 描述：物品详细描述面板。
-// 创建者：Aze
-// 创建时间：2025-01-11
 public class ItemToolTip : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText;
@@ -12,8 +10,7 @@ public class ItemToolTip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Text valueText;
     [SerializeField] private GameObject bottomPart;
-
-    [Header("建造")] 
+    
     public GameObject resourcePanel;
     [SerializeField] private Image[] resourceImages;
     public void SetUpToolTip(ItemDetails itemDetails, SlotType slotType)
@@ -39,20 +36,20 @@ public class ItemToolTip : MonoBehaviour
             bottomPart.SetActive(false);
         }
 
-        //强制刷新
+        //强锟斤拷刷锟斤拷
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
     private string GetItemType(ItemType itemType)
     {
         return itemType switch
         {
-            ItemType.Seed => "种子",
-            ItemType.WaterTool => "水壶",
-            ItemType.HoeTool => "锄头",
-            ItemType.ChopTool => "斧头",
-            ItemType.Commodity => "商品",
-            ItemType.Furniture => "家具",
-            _ => "无"
+            ItemType.Seed => "绉嶅瓙",
+            ItemType.WaterTool => "水锟斤拷",
+            ItemType.HoeTool => "锟斤拷头",
+            ItemType.ChopTool => "锟斤拷头",
+            ItemType.Commodity => "锟斤拷品",
+            ItemType.Furniture => "锟揭撅拷",
+            _ => "锟斤拷"
         };
     }
 

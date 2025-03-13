@@ -1,3 +1,4 @@
+using Event;
 using UnityEngine;
 public class TimeManager:MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class TimeManager:MonoBehaviour
 
     private void Start()
     {
-        EventHandler.CallGameDateEvent(gameHour,gameDay,gameMonth,gameYear,season);
-        EventHandler.CallGameMinuteEvent(gameMinute,gameHour);
+        TimeEvent.CallGameDateEvent(gameHour,gameDay,gameMonth,gameYear,season);
+        TimeEvent.CallGameMinuteEvent(gameMinute,gameHour);
     }
 
     private void Update()
@@ -44,8 +45,8 @@ public class TimeManager:MonoBehaviour
         if (Input.GetKeyUp(KeyCode.G))
         {
             gameDay++;
-            EventHandler.CallGameDayEvent(gameDay);
-            EventHandler.CallGameDateEvent(gameHour,gameDay,gameMonth,gameYear,season);
+            TimeEvent.CallGameDayEvent(gameDay);
+            TimeEvent.CallGameDateEvent(gameHour,gameDay,gameMonth,gameYear,season);
         }
 
     }
@@ -104,14 +105,13 @@ public class TimeManager:MonoBehaviour
                             }
                             season = (Season)seasonNumber;
                         }
-                        //刷新地图和农作物生长
-                        EventHandler.CallGameDayEvent(gameDay);
+                        
+                        TimeEvent.CallGameDayEvent(gameDay);
                     }
                 }
-               EventHandler.CallGameDateEvent(gameHour,gameDay,gameMonth,gameYear,season);
+                TimeEvent.CallGameDateEvent(gameHour,gameDay,gameMonth,gameYear,season);
             }
-            EventHandler.CallGameMinuteEvent(gameMinute,gameHour);
+            TimeEvent.CallGameMinuteEvent(gameMinute,gameHour);
         }
-        //Debug.Log("Second: "+gameSecond+" "+"Minute: "+gameMinute);
     }
 }

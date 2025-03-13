@@ -1,18 +1,20 @@
+using Event;
 using UnityEngine;
-// 描述：场景切换参数。
-// 创建者：Aze
-// 创建时间：2025-01-21
-public class Teleport : MonoBehaviour
-{
-    [SceneName]
-    public string sceneToGo;
-    public Vector3 positionToGo;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+namespace Transition
+{
+    public class Teleport : MonoBehaviour
     {
-        if (collision.CompareTag("Player"))
+        [SceneName]
+        public string sceneToGo;
+        public Vector3 positionToGo;
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            EventHandler.CallTransitionEvent(sceneToGo,positionToGo);
+            if (collision.CompareTag("Player"))
+            {
+                SceneEvent.CallTransitionEvent(sceneToGo,positionToGo);
+            }
         }
     }
 }

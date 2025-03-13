@@ -1,17 +1,15 @@
 
-// ÃèÊö£ºÏà¹Ø²ÎÊıµÄÉèÖÃ¡£
-// ´´½¨Õß£ºAze
-// ´´½¨Ê±¼ä£º2025-01-12
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Aze
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2025-01-12
 public class Settings
 {
-    //Ê±¼äÏà¹Ø
     public const float secondThreshold = 0.12f;
     public const int secondHold = 59;
     public const int minuteHold = 59;
     public const int hourHold = 23;
     public const int dayHold = 30;
     public const int seasonHold = 1;
-
-    //´«ËÍ¹ı¶É
+    
     public const float fadeDuration = 1.5f;
 }

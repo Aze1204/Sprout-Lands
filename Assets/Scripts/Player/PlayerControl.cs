@@ -1,4 +1,6 @@
 using System.Collections;
+using Event;
+using Inventory.Logic;
 using Sprout.Inventory;
 using UnityEngine;
 public class PlayerControl : MonoBehaviour
@@ -28,20 +30,20 @@ public class PlayerControl : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
-        EventHandler.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
-        EventHandler.MoveToPosition += OnMoveToPosition;
-        EventHandler.MouseClickedEvent += OnMouseClickedEvent;
-        EventHandler.HarvestAtPlayerPosition += OnHarvestAtPlayerPosition;
+        SceneEvent.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
+        SceneEvent.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
+        SceneEvent.MoveToPosition += OnMoveToPosition;
+        MouseEvent.MouseClickedEvent += OnMouseClickedEvent;
+        InventoryEvent.HarvestAtPlayerPosition += OnHarvestAtPlayerPosition;
     }
     
     private void OnDisable()
     {
-        EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
-        EventHandler.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
-        EventHandler.MoveToPosition -= OnMoveToPosition;
-        EventHandler.MouseClickedEvent -= OnMouseClickedEvent;
-        EventHandler.HarvestAtPlayerPosition -= OnHarvestAtPlayerPosition;
+        SceneEvent.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
+        SceneEvent.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
+        SceneEvent.MoveToPosition -= OnMoveToPosition;
+        MouseEvent.MouseClickedEvent -= OnMouseClickedEvent;
+        InventoryEvent.HarvestAtPlayerPosition -= OnHarvestAtPlayerPosition;
     }
 
     private void Update()
@@ -99,7 +101,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            EventHandler.CallExecuteActionAfterAnimationEvent(pos, details);
+            MouseEvent.CallExecuteActionAfterAnimationEvent(pos, details);
         }
         
     }
@@ -113,7 +115,7 @@ public class PlayerControl : MonoBehaviour
         animator.SetFloat("InputX", mouseX);
         animator.SetFloat("InputY", mouseY);
         yield return new WaitForSeconds(0.5f);
-        EventHandler.CallExecuteActionAfterAnimationEvent(mouseWorldPos, details);
+        MouseEvent.CallExecuteActionAfterAnimationEvent(mouseWorldPos, details);
         yield return new WaitForSeconds(0.2f);
         isUseTool = false;
         inputDisable = false;

@@ -1,4 +1,6 @@
+using Event;
 using UnityEngine;
+using Utilities;
 
 namespace Sprout.Crop
 {
@@ -10,14 +12,14 @@ namespace Sprout.Crop
 
         private void OnEnable()
         {
-            EventHandler.PlantSeedEvent += OnPlantSeedEvent;
-            EventHandler.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
+            InventoryEvent.PlantSeedEvent += OnPlantSeedEvent;
+            SceneEvent.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
         }
 
         private void OnDisable()
         {
-            EventHandler.PlantSeedEvent -= OnPlantSeedEvent;
-            EventHandler.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
+            InventoryEvent.PlantSeedEvent -= OnPlantSeedEvent;
+            SceneEvent.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
         }
         
         private void OnPlantSeedEvent(int id, TileDetails tileDetails)

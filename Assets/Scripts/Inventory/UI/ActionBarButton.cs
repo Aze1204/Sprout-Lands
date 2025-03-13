@@ -20,11 +20,11 @@ public class ActionBarButton : MonoBehaviour
                 slotUI.isSelected = !slotUI.isSelected;
                 if (slotUI.isSelected)
                 {
-                    slotUI.inventoryUI.UpdateSlotHightLight(slotUI.slotIndex);
+                    slotUI.InventoryUI.UpdateSlotHightLight(slotUI.slotIndex);
                 }
                 else
                 {
-                    slotUI.inventoryUI.UpdateSlotHightLight(-1);
+                    slotUI.InventoryUI.UpdateSlotHightLight(-1);
                 }
             }
         }

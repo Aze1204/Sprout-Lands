@@ -1,33 +1,34 @@
 using UnityEngine;
-// 描述：泛型单例。
-// 创建者：Aze
-// 创建时间：2025-01-02
-public class Singleton<T> : MonoBehaviour where T : Singleton<T> 
+
+namespace Utilities
 {
-    private static T instance;
-
-    public static T Instance
+    public class Singleton<T> : MonoBehaviour where T : Singleton<T> 
     {
-        get => instance;
-    }
+        private static T instance;
 
-    protected virtual void Awake()
-    {
-        if (instance != null)
+        public static T Instance
         {
-            Destroy(gameObject);    //保证只有一个单例存在
+            get => instance;
         }
-        else
-        {
-            instance = (T)this;
-        }
-    }
 
-    protected virtual void OnDestroy()
-    {
-        if(instance == this)
+        protected virtual void Awake()
         {
-            instance = null;
+            if (instance != null)
+            {
+                Destroy(gameObject);    //锟斤拷证只锟斤拷一锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
+            }
+            else
+            {
+                instance = (T)this;
+            }
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if(instance == this)
+            {
+                instance = null;
+            }
         }
     }
 }

@@ -1,23 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Event;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-// 描述：全局管理瓦片。
-// 创建者：Aze
-// 创建时间：2025-01-24
-
 namespace Sprout.Map
 {
-    public class GridMapManager : Singleton<GridMapManager>
+    public class GridMapManager : Utilities.Singleton<GridMapManager>
     {
-        [Header("种地瓦片切换信息")]
         public TileBase tileBase;
         private Tilemap digitalTilemap;
         
-        [Header("地图信息")]
         public List<MapData_SO> mapData;
 
         private Dictionary<string,TileDetails> tileDetailsDict = new Dictionary<string, TileDetails>();
@@ -26,16 +21,16 @@ namespace Sprout.Map
         
         private void OnEnable()
         {
-            EventHandler.ExecuteActionAfterAnimationEvent += OnExecuteActionAfterAnimationEvent;
-            EventHandler.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
-            EventHandler.GameDayEvent += OnGameDayEvent;
+            MouseEvent.ExecuteActionAfterAnimationEvent += OnExecuteActionAfterAnimationEvent;
+            SceneEvent.AfterSceneUnloadEvent += OnAfterSceneUnloadEvent;
+            TimeEvent.GameDayEvent += OnGameDayEvent;
         }
 
         private void OnDisable()
         {
-            EventHandler.ExecuteActionAfterAnimationEvent -= OnExecuteActionAfterAnimationEvent;
-            EventHandler.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
-            EventHandler.GameDayEvent -= OnGameDayEvent;
+            MouseEvent.ExecuteActionAfterAnimationEvent -= OnExecuteActionAfterAnimationEvent;
+            SceneEvent.AfterSceneUnloadEvent -= OnAfterSceneUnloadEvent;
+            TimeEvent.GameDayEvent -= OnGameDayEvent;
         }
         
         private void Start()
@@ -46,11 +41,7 @@ namespace Sprout.Map
             }
         }
         
-        /// <summary>
-        /// 执行时机工具或者物品功能
-        /// </summary>
-        /// <param name="pos">鼠标位置</param>
-        /// <param name="details">物品信息</param>
+        // ReSharper disable Unity.PerformanceAnalysis
         private void OnExecuteActionAfterAnimationEvent(Vector3 pos, ItemDetails details)
         {
             var mouseGridPos = currentGrid.WorldToCell(pos);
@@ -61,34 +52,31 @@ namespace Sprout.Map
                 switch (details.itemType)
                 {
                     case ItemType.Seed:
-                        EventHandler.CallPlantSeedEvent(details.id, currentTile);
-                        EventHandler.CallDropItemEvent(details.id,mouseGridPos,ItemType.Seed);
+                        InventoryEvent.CallPlantSeedEvent(details.id, currentTile);
+                        InventoryEvent.CallDropItemEvent(details.id,mouseGridPos,ItemType.Seed);
                         break;
                     case ItemType.Commodity:
-                        EventHandler.CallDropItemEvent(details.id,mouseGridPos,ItemType.Commodity);
+                        InventoryEvent.CallDropItemEvent(details.id,mouseGridPos,ItemType.Commodity);
                         break;
                     case ItemType.HoeTool:
                         SetDigGroundTile(currentTile);
                         currentTile.daySinceDug = 0;
                         currentTile.canDig = false;
-                        //currentTile.canDropItem = false;
-                        //TODO:音效
                         break;
                     case ItemType.Basket:
-                        global::Crop currentCrop = GetCropObject(mouseGridPos);
-                        //TODO:收割
-                        if (currentCrop != null)
+                        var currentCrop = GetCropObject(mouseGridPos);
+                        if (currentCrop)
                         {
                             currentCrop.ProcessToolAction(details,currentTile);
                         }
                         else
                         {
-                            Debug.Log("Crop不存在");
+                            Debug.Log("Crop");
                         }
                         break;
                     case ItemType.Furniture:
                         Debug.Log(details.id);
-                        EventHandler.CallBuildFurnitureEvent(details.id,mouseGridPos);
+                        InventoryEvent.CallBuildFurnitureEvent(details.id,mouseGridPos);
                         break;
                 }
                 UpdateTileDetails(currentTile);
@@ -116,10 +104,6 @@ namespace Sprout.Map
             DisplayMap(SceneManager.GetActiveScene().name);
         }
         
-        /// <summary>
-        /// 每天执行一次
-        /// </summary>
-        /// <param name="day"></param>
         private void OnGameDayEvent(int day)
         {
             foreach (var tile in tileDetailsDict)
@@ -128,7 +112,6 @@ namespace Sprout.Map
                 {
                     tile.Value.daySinceDug++;
                 }
-                //超过时间消除挖坑
                 if (tile.Value.daySinceDug>5&&tile.Value.seedItemID == -1)
                 {
                     tile.Value.daySinceDug = -1;
@@ -187,12 +170,7 @@ namespace Sprout.Map
                 }
             }
         }
-
-        /// <summary>
-        /// 根据Key返回瓦片信息
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        
         private TileDetails GetTileDetails(string key)
         {
             if (tileDetailsDict.ContainsKey(key))
@@ -219,10 +197,7 @@ namespace Sprout.Map
                 digitalTilemap.SetTile(pos,tileBase);
             }
         }
-        /// <summary>
-        /// 更新瓦片信息
-        /// </summary>
-        /// <param name="tileDetails">瓦片详情</param>
+        
         private void UpdateTileDetails(TileDetails tileDetails)
         {
             string key = " X: " + tileDetails.girdX + "-Y: " + tileDetails.gridY+ "-" + SceneManager.GetActiveScene().name;
@@ -230,15 +205,8 @@ namespace Sprout.Map
             {
                 tileDetailsDict[key] = tileDetails;
             }
-            else
-            {
-                Debug.Log("没有东西");
-            }
         }
-
-        /// <summary>
-        /// 刷新地图
-        /// </summary>
+        
         private void RefreshMap()
         {
             if (digitalTilemap!=null)
@@ -270,9 +238,8 @@ namespace Sprout.Map
 
                     if (tileDetails.seedItemID>-1)
                     {
-                        EventHandler.CallPlantSeedEvent(tileDetails.seedItemID,tileDetails);
+                        InventoryEvent.CallPlantSeedEvent(tileDetails.seedItemID,tileDetails);
                     }
-                    //TODO:种子
                 }
             }
         }

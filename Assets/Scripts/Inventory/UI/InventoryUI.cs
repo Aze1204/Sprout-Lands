@@ -1,17 +1,15 @@
 using System.Collections.Generic;
+using Event;
+using Inventory.Logic;
 using UnityEngine;
 using UnityEngine.UI;
-// 描述：控制所有Inventory相关的组件。
-// 创建者：Aze
-// 创建时间：2025-01-08
 
 namespace Sprout.Inventory
 {
     public class InventoryUI : MonoBehaviour
     {
         public ItemToolTip itemToolTip;
-
-        [Header("拖拽图片")]
+        
         public Image dragItem;
 
         [SerializeField] private SlotUI[] playerSlots;
@@ -23,15 +21,14 @@ namespace Sprout.Inventory
 
         private void OnEnable()
         {
-            EventHandler.UpdateInventoryUI += OnUpdateInventoryUI;
+            InventoryEvent.UpdateInventoryUI += OnUpdateInventoryUI;
         }
 
         private void OnDisable()
         {
-            EventHandler.UpdateInventoryUI -= OnUpdateInventoryUI;
+            InventoryEvent.UpdateInventoryUI -= OnUpdateInventoryUI;
         }
-
-        //为每一个格子编号
+        
         private void Start()
         {
             for(int i = 0; i < playerSlots.Length; i++)
@@ -86,11 +83,7 @@ namespace Sprout.Inventory
             bagOpened = !bagOpened;
             playerBag.SetActive(bagOpened);
         }
-
-        /// <summary>
-        /// 更新高亮显示
-        /// </summary>
-        /// <param name="index"></param>
+        
         public void UpdateSlotHightLight(int index)
         {
             foreach (var slot in playerSlots)

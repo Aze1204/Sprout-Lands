@@ -1,7 +1,8 @@
+using Inventory.Logic;
 using UnityEngine;
-// ÃèÊö£ºÎïÆ·Ïà¹ØÂß¼­¡£
-// ´´½¨Õß£ºAze
-// ´´½¨Ê±¼ä£º2025-01-02
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Aze
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2025-01-02
 namespace Sprout.Inventory
 {
     public class Item : MonoBehaviour
@@ -26,7 +27,7 @@ namespace Sprout.Inventory
         {
             itemID = id;
 
-            //»ñµÃµ±Ç°Êý¾Ý
+            //ï¿½ï¿½Ãµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
             itemDetails = InventoryManager.Instance.GetItemDetails(itemID);
 
             if (itemDetails!=null)
@@ -34,8 +35,8 @@ namespace Sprout.Inventory
                 spriteRenderer.sprite = 
                     itemDetails.itemOnWorld ? itemDetails.itemOnWorld : itemDetails.itemIcon;
 
-                //ÐÞ¸ÄÅö×²Ìå³ß´ç
-                Vector2 newSize = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);    //ÎïÌåµÄÊµ¼Ê³ß´ç
+                //ï¿½Þ¸ï¿½ï¿½ï¿½×²ï¿½ï¿½ß´ï¿½
+                Vector2 newSize = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);    //ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê³ß´ï¿½
                 coll.size = newSize;
                 coll.offset = new Vector2(0,spriteRenderer.sprite.bounds.center.y);
             }

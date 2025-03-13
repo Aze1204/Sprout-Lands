@@ -1,9 +1,10 @@
 using DG.Tweening;
+using Event;
 using TMPro;
 using UnityEngine;
-// ÃèÊö£ºÊ±¼äUI¿ØÖÆ¡£
-// ´´½¨Õß£ºAze
-// ´´½¨Ê±¼ä£º2025-01-12
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½UIï¿½ï¿½ï¿½Æ¡ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Aze
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2025-01-12
 public class TimeUI : MonoBehaviour
 {
     public RectTransform pointer;
@@ -12,14 +13,14 @@ public class TimeUI : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.GameMinuteEvent += OnGameMinuteEvent;
-        EventHandler.GameDateEvent += OnGameDateEvent;
+        TimeEvent.GameMinuteEvent += OnGameMinuteEvent;
+        TimeEvent.GameDateEvent += OnGameDateEvent;
     }
 
     private void OnDisable()
     {
-        EventHandler.GameMinuteEvent -= OnGameMinuteEvent;
-        EventHandler.GameDateEvent -= OnGameDateEvent;
+        TimeEvent.GameMinuteEvent -= OnGameMinuteEvent;
+        TimeEvent.GameDateEvent -= OnGameDateEvent;
     }
 
     private void OnGameMinuteEvent(int minute, int hour)
@@ -29,7 +30,7 @@ public class TimeUI : MonoBehaviour
 
     private void OnGameDateEvent(int hour, int day, int month, int year, Season season)
     {
-        dateText.text = year + "Äê" + month.ToString("00") + "ÔÂ" + day.ToString("00") + "ÈÕ";
+        dateText.text = year + "ï¿½ï¿½" + month.ToString("00") + "ï¿½ï¿½" + day.ToString("00") + "ï¿½ï¿½";
         PointerRotate(hour);
     }
 
