@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Event;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-namespace Sprout.Map
+namespace Map.Logic
 {
     public class GridMapManager : Utilities.Singleton<GridMapManager>
     {
@@ -83,15 +81,15 @@ namespace Sprout.Map
             }
         }
 
-        private global::Crop GetCropObject(Vector3 mouseWorldPos)
+        private global::Crop.Logic.Crop GetCropObject(Vector3 mouseWorldPos)
         {
             Collider2D[] colliders = Physics2D.OverlapPointAll(mouseWorldPos);
-            global::Crop crop = null;
+            global::Crop.Logic.Crop crop = null;
             for (int i = 0; i < colliders.Length; i++)
             {
-                if (colliders[i].GetComponent<global::Crop>())
+                if (colliders[i].GetComponent<global::Crop.Logic.Crop>())
                 {
-                    crop = colliders[i].GetComponent<global::Crop>();
+                    crop = colliders[i].GetComponent<global::Crop.Logic.Crop>();
                 }
             }
             return crop;
@@ -214,7 +212,7 @@ namespace Sprout.Map
                 digitalTilemap.ClearAllTiles();
             }
 
-            foreach (var crop in FindObjectsOfType<global::Crop>())
+            foreach (var crop in FindObjectsOfType<global::Crop.Logic.Crop>())
             {
                 Destroy(crop.gameObject);
             }

@@ -71,7 +71,7 @@ namespace Sprout.Crop
             GameObject cropInstance = Instantiate(cropPrefab, pos, Quaternion.identity, cropParent);
             cropInstance.GetComponentInChildren<SpriteRenderer>().sprite = cropSprite;
             
-            cropInstance.GetComponent<global::Crop>().cropDetails = cropDetails;
+            cropInstance.GetComponent<global::Crop.Logic.Crop>().cropDetails = cropDetails;
         }
         
         public CropDetails GetCropDetails(int id)

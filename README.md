@@ -2,7 +2,7 @@
 
 &emsp;&emsp;这是一个可爱的16位像素游戏，让玩家沉浸在迷人的乡村生活中。在这个游戏中，你将扮演一位小农场主，负责管理和经营自己的农场。
 
-![311355837-2e239534-3ddc-40eb-ab6a-280136af1d1b](F:\EdgeDown\311355837-2e239534-3ddc-40eb-ab6a-280136af1d1b.gif)
+![311355837-2e239534-3ddc-40eb-ab6a-280136af1d1b](E:\UnityFile\Sprout Lands\img\311355837-2e239534-3ddc-40eb-ab6a-280136af1d1b.gif)
 
 # 🎮概要
 
@@ -65,13 +65,13 @@ private void SwitchAnimation()
 
 # 🌻2.碰撞检测
 
-![image-20250203210432146](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20250203210432146.png)
+![image-20250203210432146](E:\UnityFile\Sprout Lands\img\image-20250203210432146.png)
 
 - 单独绘制`Collision`层，并添加`Composite Collider 2D`组件作为碰撞检测，主要是避免角色穿墙的BUG。
 
 # 🌻3.摄像机跟随
 
-![image-20250203210657736](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20250203210657736.png)
+![image-20250203210657736](E:\UnityFile\Sprout Lands\img\image-20250203210657736.png)
 
 - 采用`Cinemachine Camera`插件作为跟随人物移动的摄像机
 
@@ -169,11 +169,11 @@ private void UpdateGameTime()
 
 - 采用`DOTWeen`插件实现动画效果，并使用 `Mathf.Lerp` 函数将`hourRange`的范围 `0-18` 映射到 `-60` 到 `60` 的旋转范围。
 
-  ![oKT7RD](F:\EdgeDown\oKT7RD.gif)
+  ![oKT7RD](E:\UnityFile\Sprout Lands\img\oKT7RD.gif)
 
   # 🌻5.背包
 
-  ![image-20250203220044445](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20250203220044445.png)
+  ![image-20250203220044445](E:\UnityFile\Sprout Lands\img\image-20250203220044445.png)
 
 - 采用 `ScriptableObject`作为作为`Editor`时的数据持久化，存储物品的相应属性。
 
@@ -281,7 +281,7 @@ private void UpdateGameTime()
 
 - 将单个格子作为`Prefab`处理，方便使用，每个`Prefab`都挂载`Item`脚本，实现自动确定图片大小以及锚点位置等功能。
 
-  ![zhR86z](F:\EdgeDown\zhR86z.gif)
+  ![zhR86z](E:\UnityFile\Sprout Lands\img\zhR86z.gif)
 
 # 🌻6.销毁物品
 
@@ -336,7 +336,7 @@ private void UpdateGameTime()
 
 # 🌻7.耕种
 
-![x_z913](F:\EdgeDown\x_z913.gif)
+![x_z913](E:\UnityFile\Sprout Lands\img\x_z913.gif)
 
 - 通过绘制`collider`瓦片确定那些区域可以耕种，并返回鼠标检测状态。
 
